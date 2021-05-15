@@ -39,34 +39,6 @@ class HomeFragment : Fragment() {
                 setHasFixedSize(true)
                 adapter = moviesAdapterPopular
             }
-
-            val moviesAdapterNowPlaying = MoviesAdapter()
-            fragmentHomeBinding.progressBar.visibility = View.VISIBLE
-            viewModel.getMoviesNowPlaying().observe(viewLifecycleOwner,{movies ->
-                fragmentHomeBinding.progressBar.visibility = View.GONE
-                moviesAdapterNowPlaying.setMovies(movies)
-                moviesAdapterNowPlaying.notifyDataSetChanged()
-            })
-
-            with(fragmentHomeBinding.rvNowPlaying) {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                setHasFixedSize(true)
-                adapter = moviesAdapterNowPlaying
-            }
-
-            val moviesAdapterUpComing = MoviesAdapter()
-            fragmentHomeBinding.progressBar.visibility = View.VISIBLE
-            viewModel.getMoviesUpComing().observe(viewLifecycleOwner,{movies ->
-                fragmentHomeBinding.progressBar.visibility = View.GONE
-                moviesAdapterUpComing.setMovies(movies)
-                moviesAdapterUpComing.notifyDataSetChanged()
-            })
-
-            with(fragmentHomeBinding.rvUpcoming) {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                setHasFixedSize(true)
-                adapter = moviesAdapterUpComing
-            }
         }
     }
 }
