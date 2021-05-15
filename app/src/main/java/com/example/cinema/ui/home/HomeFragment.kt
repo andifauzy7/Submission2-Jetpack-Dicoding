@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.cinema.R
 import com.example.cinema.databinding.FragmentHomeBinding
 
 
@@ -26,6 +29,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Glide.with(this)
+            .load(R.drawable.avatar)
+            .centerCrop()
+            .transform(RoundedCorners(16))
+            .into(fragmentHomeBinding.profileImage)
         if (activity != null){
             viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
             val moviesAdapterPopular = MoviesAdapter()
