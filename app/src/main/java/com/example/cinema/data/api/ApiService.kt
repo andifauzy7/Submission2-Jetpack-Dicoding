@@ -19,9 +19,9 @@ interface ApiService {
     @GET("movie/now_playing?api_key=${ApiConfig.ApiKey}")
     fun getMoviesNowPlaying() : Call<ResponseMovie>
 
-    @GET("/movie/{movie_id}?api_key=${ApiConfig.ApiKey}")
+    @GET("movie/{movie_id}?api_key=${ApiConfig.ApiKey}")
     fun getMovieDetail(@Path("movie_id") id: String): Call<ResponseMovieDetail>
 
-    @GET("/movie/{movie_id}/reviews?api_key=${ApiConfig.ApiKey}")
+    @GET("movie/{movie_id}/reviews?api_key=${ApiConfig.ApiKey}")
     fun getMovieReview(@Path("movie_id") id: String): Call<ResponseMovieReview>
 }

@@ -28,4 +28,5 @@ task clean(type: Delete) {
 ext {
     retrofitVersion = "2.9.0"
     loggingInterceptorVersion = "4.9.1"
+    glideVersion = '4.11.0'
 }

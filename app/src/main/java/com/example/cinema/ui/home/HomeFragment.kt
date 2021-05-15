@@ -4,28 +4,69 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.cinema.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cinema.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
-
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var viewModel: HomeViewModel
+    private lateinit var fragmentHomeBinding: FragmentHomeBinding
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+    ): View {
+        fragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        return fragmentHomeBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (activity != null){
+            viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+            val moviesAdapterPopular = MoviesAdapter()
+            fragmentHomeBinding.progressBar.visibility = View.VISIBLE
+            viewModel.getMoviesPopular().observe(viewLifecycleOwner,{movies ->
+                fragmentHomeBinding.progressBar.visibility = View.GONE
+                moviesAdapterPopular.setMovies(movies)
+                moviesAdapterPopular.notifyDataSetChanged()
+            })
+
+            with(fragmentHomeBinding.rvPopular) {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                setHasFixedSize(true)
+                adapter = moviesAdapterPopular
+            }
+
+            val moviesAdapterNowPlaying = MoviesAdapter()
+            fragmentHomeBinding.progressBar.visibility = View.VISIBLE
+            viewModel.getMoviesNowPlaying().observe(viewLifecycleOwner,{movies ->
+                fragmentHomeBinding.progressBar.visibility = View.GONE
+                moviesAdapterNowPlaying.setMovies(movies)
+                moviesAdapterNowPlaying.notifyDataSetChanged()
+            })
+
+            with(fragmentHomeBinding.rvNowPlaying) {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                setHasFixedSize(true)
+                adapter = moviesAdapterNowPlaying
+            }
+
+            val moviesAdapterUpComing = MoviesAdapter()
+            fragmentHomeBinding.progressBar.visibility = View.VISIBLE
+            viewModel.getMoviesUpComing().observe(viewLifecycleOwner,{movies ->
+                fragmentHomeBinding.progressBar.visibility = View.GONE
+                moviesAdapterUpComing.setMovies(movies)
+                moviesAdapterUpComing.notifyDataSetChanged()
+            })
+
+            with(fragmentHomeBinding.rvUpcoming) {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                setHasFixedSize(true)
+                adapter = moviesAdapterUpComing
+            }
+        }
     }
 }
