@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.cinema.data.response.ResultMovies
 import com.example.cinema.databinding.ItemMoviesBinding
 
@@ -16,8 +17,10 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>(){
                 tvMoviesTitle.text = movies.title
                 ratingMovies.rating = (movies.voteAverage / 2).toFloat()
                 Glide.with(itemView.context)
-                    .load("http://image.tmdb.org/t/p/w500" + movies.posterPath).centerCrop()
-                    .into(imgMoviesPoster)
+                        .load("http://image.tmdb.org/t/p/w500" + movies.posterPath)
+                        .centerCrop()
+                        .transform(RoundedCorners(16))
+                        .into(imgMoviesPoster)
             }
         }
     }

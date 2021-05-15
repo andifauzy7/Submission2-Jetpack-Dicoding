@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         val activityMainActivity = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainActivity.root)
+        supportActionBar?.hide()
 
         val navController = findNavController(R.id.nav_host_fragment)
 

@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cinema.databinding.FragmentHomeBinding
+
 
 class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
@@ -28,7 +30,7 @@ class HomeFragment : Fragment() {
             viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
             val moviesAdapterPopular = MoviesAdapter()
             fragmentHomeBinding.progressBar.visibility = View.VISIBLE
-            viewModel.getMoviesPopular().observe(viewLifecycleOwner,{movies ->
+            viewModel.getMoviesPopular().observe(viewLifecycleOwner, { movies ->
                 fragmentHomeBinding.progressBar.visibility = View.GONE
                 moviesAdapterPopular.setMovies(movies)
                 moviesAdapterPopular.notifyDataSetChanged()
@@ -38,6 +40,20 @@ class HomeFragment : Fragment() {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
                 adapter = moviesAdapterPopular
+            }
+
+            val tvShowAdapterPopular = TVShowAdapter()
+            fragmentHomeBinding.progressBar.visibility = View.VISIBLE
+            viewModel.getTVShowPopular().observe(viewLifecycleOwner, { show ->
+                fragmentHomeBinding.progressBar.visibility = View.GONE
+                tvShowAdapterPopular.setShow(show)
+                tvShowAdapterPopular.notifyDataSetChanged()
+            })
+
+            with(fragmentHomeBinding.rvPopularTv) {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                setHasFixedSize(true)
+                adapter = tvShowAdapterPopular
             }
         }
     }
