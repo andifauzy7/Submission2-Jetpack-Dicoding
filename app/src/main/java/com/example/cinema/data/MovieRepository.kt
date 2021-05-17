@@ -59,46 +59,52 @@ class MovieRepository {
         return tvShow
     }
 
-    fun getMoviesUpComing() : MutableLiveData<List<ResultMovies>> {
-        val movies = MutableLiveData<List<ResultMovies>>()
-        val clients = ApiConfig.getApiService().getMoviesUpComing()
+    fun getMoviesSearch(keyword : String) : MutableLiveData<Resource<List<ResultMovies>>>{
+        val movies = MutableLiveData<Resource<List<ResultMovies>>>()
+        val clients = ApiConfig.getApiService().getMoviesSearch(keyword)
         clients.enqueue(object : Callback<ResponseMovie> {
             override fun onResponse(
-                call: Call<ResponseMovie>,
-                response: Response<ResponseMovie>
+                    call: Call<ResponseMovie>,
+                    response: Response<ResponseMovie>
             ) {
-                if(response.isSuccessful) {
-                    movies.postValue(response.body()?.results)
+                if (response.isSuccessful) {
+                    val result : List<ResultMovies> = response.body()!!.results
+                    movies.postValue(Resource.success(result))
                 } else {
+                    movies.postValue(Resource.error(response.message().toString(), emptyList()))
                     Log.e("MainViewModel", "onFailure : ${response.message()}")
                 }
             }
             override fun onFailure(call: Call<ResponseMovie>, t: Throwable) {
+                movies.postValue(Resource.error(t.message.toString(), emptyList()))
                 Log.e("MainViewModel", "onFailure: ${t.message.toString()}")
             }
         })
         return movies
     }
 
-    fun getMoviesNowPlaying() : MutableLiveData<List<ResultMovies>>{
-        val movies = MutableLiveData<List<ResultMovies>>()
-        val clients = ApiConfig.getApiService().getMoviesNowPlaying()
-        clients.enqueue(object : Callback<ResponseMovie> {
+    fun getShowSearch(keyword : String) : MutableLiveData<Resource<List<ResultTVShow>>>{
+        val show = MutableLiveData<Resource<List<ResultTVShow>>>()
+        val clients = ApiConfig.getApiService().getShowSearch(keyword)
+        clients.enqueue(object : Callback<ResponseTVShow> {
             override fun onResponse(
-                call: Call<ResponseMovie>,
-                response: Response<ResponseMovie>
+                    call: Call<ResponseTVShow>,
+                    response: Response<ResponseTVShow>
             ) {
-                if(response.isSuccessful) {
-                    movies.postValue(response.body()?.results)
+                if (response.isSuccessful) {
+                    val result : List<ResultTVShow> = response.body()!!.results
+                    show.postValue(Resource.success(result))
                 } else {
+                    show.postValue(Resource.error(response.message().toString(), emptyList()))
                     Log.e("MainViewModel", "onFailure : ${response.message()}")
                 }
             }
-            override fun onFailure(call: Call<ResponseMovie>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseTVShow>, t: Throwable) {
+                show.postValue(Resource.error(t.message.toString(), emptyList()))
                 Log.e("MainViewModel", "onFailure: ${t.message.toString()}")
             }
         })
-        return movies
+        return show
     }
 
     fun getMovieDetail(movieId: String){
