@@ -31,10 +31,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Glide.with(this)
-            .load(R.drawable.avatar)
+            .load(R.drawable.avatar_male)
             .centerCrop()
             .transform(RoundedCorners(16))
-            .into(fragmentHomeBinding.profileImage)
+            .into(fragmentHomeBinding.profileImageHome)
         if (activity != null){
             viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
             val moviesAdapterPopular = MoviesAdapter()
