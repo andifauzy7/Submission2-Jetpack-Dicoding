@@ -14,7 +14,6 @@ import com.example.cinema.R
 import com.example.cinema.databinding.FragmentHomeBinding
 import com.example.cinema.utils.Resource
 
-
 class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var fragmentHomeBinding: FragmentHomeBinding

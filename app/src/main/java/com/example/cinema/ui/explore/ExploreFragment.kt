@@ -8,6 +8,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cinema.databinding.FragmentExploreBinding
 import com.example.cinema.utils.Resource
 
@@ -28,14 +29,19 @@ class ExploreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         exploreViewModel = ViewModelProvider(this).get(ExploreViewModel::class.java)
+        val moviesAdapterPopular = MoviesAdapter()
+        val tvShowAdapterPopular = TVShowAdapter()
 
         fragmentExploreBinding.searchItemExplore.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 fragmentExploreBinding.searchItemExplore.onActionViewCollapsed()
                 if(fragmentExploreBinding.radioGroupTypeExplore.checkedRadioButtonId == fragmentExploreBinding.moviesButtonExplore.id){
                     exploreViewModel.getMoviesSearch(query.toString()).observe(viewLifecycleOwner, { movies ->
+                        fragmentExploreBinding.rvExploreMovies.visibility = View.VISIBLE
+                        fragmentExploreBinding.rvExploreShow.visibility = View.GONE
                         if (movies.status == Resource.Status.SUCCESS) {
-                            Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
+                            moviesAdapterPopular.setMovies(movies.data)
+                            moviesAdapterPopular.notifyDataSetChanged()
                         }
                         else if (movies.status == Resource.Status.ERROR) {
                             Toast.makeText(context, "Error : " + movies.message, Toast.LENGTH_LONG).show()
@@ -43,16 +49,17 @@ class ExploreFragment : Fragment() {
                     })
                 } else {
                     exploreViewModel.getShowSearch(query.toString()).observe(viewLifecycleOwner, { show ->
+                        fragmentExploreBinding.rvExploreShow.visibility = View.VISIBLE
+                        fragmentExploreBinding.rvExploreMovies.visibility = View.GONE
                         if (show.status == Resource.Status.SUCCESS) {
-                            Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
+                            tvShowAdapterPopular.setShow(show.data)
+                            tvShowAdapterPopular.notifyDataSetChanged()
                         }
                         else if (show.status == Resource.Status.ERROR) {
                             Toast.makeText(context, "Error : " + show.message, Toast.LENGTH_LONG).show()
                         }
                     })
                 }
-                //fragmentExploreBinding.radioGroupTypeExplore.checkedRadioButtonId
-
                 return true
             }
 
@@ -60,5 +67,18 @@ class ExploreFragment : Fragment() {
                 return true
             }
         })
+
+
+        with(fragmentExploreBinding.rvExploreMovies) {
+            layoutManager = GridLayoutManager(context,3)
+            setHasFixedSize(true)
+            adapter = moviesAdapterPopular
+        }
+
+        with(fragmentExploreBinding.rvExploreShow) {
+            layoutManager = GridLayoutManager(context,3)
+            setHasFixedSize(true)
+            adapter = tvShowAdapterPopular
+        }
     }
 }
