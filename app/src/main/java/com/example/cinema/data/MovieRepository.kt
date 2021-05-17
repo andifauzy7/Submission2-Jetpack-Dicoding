@@ -4,14 +4,15 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.cinema.data.api.ApiConfig
 import com.example.cinema.data.response.*
+import com.example.cinema.utils.Resource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MovieRepository {
 
-    fun getMoviesPopular() : MutableLiveData<List<ResultMovies>>{
-        val movies = MutableLiveData<List<ResultMovies>>()
+    fun getMoviesPopular() : MutableLiveData<Resource<List<ResultMovies>>>{
+        val movies = MutableLiveData<Resource<List<ResultMovies>>>()
         val clients = ApiConfig.getApiService().getMoviesPopular()
         clients.enqueue(object : Callback<ResponseMovie> {
             override fun onResponse(
@@ -19,20 +20,23 @@ class MovieRepository {
                     response: Response<ResponseMovie>
             ) {
                 if(response.isSuccessful) {
-                    movies.postValue(response.body()?.results)
+                    val result : List<ResultMovies> = response.body()!!.results
+                    movies.postValue(Resource.success(result))
                 } else {
+                    movies.postValue(Resource.error(response.message().toString(), emptyList()))
                     Log.e("MainViewModel", "onFailure : ${response.message()}")
                 }
             }
             override fun onFailure(call: Call<ResponseMovie>, t: Throwable) {
+                movies.postValue(Resource.error(t.message.toString(), emptyList()))
                 Log.e("MainViewModel", "onFailure: ${t.message.toString()}")
             }
         })
         return movies
     }
 
-    fun getTVShowPopular() : MutableLiveData<List<ResultTVShow>>{
-        val tvShow = MutableLiveData<List<ResultTVShow>>()
+    fun getTVShowPopular() : MutableLiveData<Resource<List<ResultTVShow>>>{
+        val tvShow = MutableLiveData<Resource<List<ResultTVShow>>>()
         val clients = ApiConfig.getApiService().getTVShowPopular()
         clients.enqueue(object : Callback<ResponseTVShow> {
             override fun onResponse(
@@ -40,13 +44,16 @@ class MovieRepository {
                     response: Response<ResponseTVShow>
             ) {
                 if(response.isSuccessful) {
-                    tvShow.postValue(response.body()?.results)
+                    val result : List<ResultTVShow> = response.body()!!.results
+                    tvShow.postValue(Resource.success(result))
                 } else {
+                    tvShow.postValue(Resource.error(response.message().toString(), emptyList()))
                     Log.e("MainViewModel", "onFailure : ${response.message()}")
                 }
             }
             override fun onFailure(call: Call<ResponseTVShow>, t: Throwable) {
-                Log.e("MainViewModel", "onFailure: ${t.message.toString()}")
+                tvShow.postValue(Resource.error(t.message.toString(), emptyList()))
+                Log.e("MainViewModel", "onFailure : ${t.message.toString()}")
             }
         })
         return tvShow
