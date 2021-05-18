@@ -19,7 +19,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>(){
                 tvMoviesTitle.text = movies.title
                 ratingMovies.rating = (movies.voteAverage / 2).toFloat()
                 Glide.with(itemView.context)
-                        .load("http://image.tmdb.org/t/p/w500" + movies.posterPath)
+                        .load("https://image.tmdb.org/t/p/w500" + movies.posterPath)
                         .centerCrop()
                         .transform(RoundedCorners(16))
                         .into(imgMoviesPoster)

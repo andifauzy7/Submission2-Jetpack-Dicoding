@@ -21,7 +21,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>(){
                             .into(imgMoviesExplore)
                 } else {
                     Glide.with(itemView.context)
-                            .load("http://image.tmdb.org/t/p/w500" + movies.posterPath)
+                            .load("https://image.tmdb.org/t/p/w500" + movies.posterPath)
                             .into(imgMoviesExplore)
                 }
             }

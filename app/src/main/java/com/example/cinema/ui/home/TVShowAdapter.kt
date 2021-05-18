@@ -22,7 +22,7 @@ class TVShowAdapter : RecyclerView.Adapter<TVShowAdapter.TVShowViewHolder>() {
                 tvTvshowTitle.text = tvShow.name
                 ratingTvShow.rating = (tvShow.voteAverage / 2).toFloat()
                 Glide.with(itemView.context)
-                        .load("http://image.tmdb.org/t/p/w500" + tvShow.posterPath)
+                        .load("https://image.tmdb.org/t/p/w500" + tvShow.posterPath)
                         .centerCrop()
                         .transform(RoundedCorners(16))
                         .into(imageTvPoster)

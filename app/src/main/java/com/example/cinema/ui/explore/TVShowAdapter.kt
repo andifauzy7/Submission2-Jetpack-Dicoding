@@ -26,7 +26,7 @@ class TVShowAdapter : RecyclerView.Adapter<TVShowAdapter.TVShowViewHolder>() {
                             .into(imgTvshowExplore)
                 } else {
                     Glide.with(itemView.context)
-                            .load("http://image.tmdb.org/t/p/w500" + tvShow.posterPath)
+                            .load("https://image.tmdb.org/t/p/w500" + tvShow.posterPath)
                             .into(imgTvshowExplore)
                 }
             }
