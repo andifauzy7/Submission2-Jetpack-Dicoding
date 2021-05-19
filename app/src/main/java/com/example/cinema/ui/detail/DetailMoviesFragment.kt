@@ -1,16 +1,19 @@
 package com.example.cinema.ui.detail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.cinema.databinding.FragmentDetailMoviesBinding
 import com.example.cinema.utils.Resource
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 class DetailMoviesFragment(idContent: String?) : Fragment() {
     private var idContent : String = idContent.toString()
@@ -26,6 +29,7 @@ class DetailMoviesFragment(idContent: String?) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(DetailMoviesViewModel::class.java)
+        val genreAdapter = GenreAdapter()
         fragmentDetailMoviesBinding.progressBarMovieDetail.visibility = View.VISIBLE
         viewModel.getMovieDetail(idContent).observe(viewLifecycleOwner, { movies ->
             if (movies.status == Resource.Status.SUCCESS) {
@@ -37,22 +41,27 @@ class DetailMoviesFragment(idContent: String?) : Fragment() {
                             .transform(RoundedCorners(16))
                             .into(fragmentDetailMoviesBinding.imgDetailMovies)
                 }
+                genreAdapter.setGenre(movies.data?.genres)
+                genreAdapter.notifyDataSetChanged()
                 fragmentDetailMoviesBinding.tvTitleMovies.text = movies.data?.title
-                fragmentDetailMoviesBinding.tvBudgetMovies.text = movies.data?.budget.toString()
-                var genre = ""
-                for (i in movies.data?.genres!!){
-                    genre += i.name + ", "
-                }
-                fragmentDetailMoviesBinding.tvGenreMovies.text = genre
+                val formatter: NumberFormat = DecimalFormat("#,###")
+                val formattedNumber: String = formatter.format(movies.data?.budget)
+                "$$formattedNumber,00".also { fragmentDetailMoviesBinding.tvBudgetMovies.text = it }
+
                 fragmentDetailMoviesBinding.ratingBarMovies.rating = (movies.data?.voteAverage?.div(2))?.toFloat()!!
                 fragmentDetailMoviesBinding.tvReleasedMovies.text = movies.data?.releaseDate
                 fragmentDetailMoviesBinding.tvHomepageMovies.text = movies.data?.homepage
                 fragmentDetailMoviesBinding.tvOverviewMovies.text = movies.data?.overview
-            }
-            else if (movies.status == Resource.Status.ERROR) {
+            } else if (movies.status == Resource.Status.ERROR) {
                 fragmentDetailMoviesBinding.progressBarMovieDetail.visibility = View.GONE
                 Toast.makeText(context, "Error : " + movies.message, Toast.LENGTH_LONG).show()
             }
         })
+
+        with(fragmentDetailMoviesBinding.rvGenreMovies) {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+            adapter = genreAdapter
+        }
     }
 }
