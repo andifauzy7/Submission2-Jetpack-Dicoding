@@ -128,7 +128,30 @@ class MovieRepository {
                 Log.e("MainViewModel", "onFailure : ${t.message.toString()}")
             }
         })
-
         return movies
+    }
+
+    fun getTVShowDetail(tvId: String) : MutableLiveData<Resource<ResponseTVShowDetail>>  {
+        val tv = MutableLiveData<Resource<ResponseTVShowDetail>>()
+        val clients = ApiConfig.getApiService().getTVShowDetail(tvId)
+        clients.enqueue(object : Callback<ResponseTVShowDetail> {
+            override fun onResponse(
+                    call: Call<ResponseTVShowDetail>,
+                    response: Response<ResponseTVShowDetail>
+            ) {
+                if (response.isSuccessful) {
+                    val result : ResponseTVShowDetail = response.body()!!
+                    tv.postValue(Resource.success(result))
+                } else {
+                    tv.postValue(Resource.error(response.message().toString()))
+                    Log.e("MainViewModel", "onFailure : ${response.message()}")
+                }
+            }
+            override fun onFailure(call: Call<ResponseTVShowDetail>, t: Throwable) {
+                tv.postValue(Resource.error(t.message.toString()))
+                Log.e("MainViewModel", "onFailure : ${t.message.toString()}")
+            }
+        })
+        return tv
     }
 }

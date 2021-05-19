@@ -26,4 +26,9 @@
     <string name="homepage_movies">Homepage Movies</string>
     <string name="overview">Overview</string>
     <string name="overview_movies">Overview Movies</string>
+    <string name="tagline">Tagline</string>
+    <string name="tagline_show">Tagline Show</string>
+    <string name="first_air">First Air</string>
+    <string name="homepage_show">Homepage Show</string>
+    <string name="overview_show">Overview Show</string>
 </resources>

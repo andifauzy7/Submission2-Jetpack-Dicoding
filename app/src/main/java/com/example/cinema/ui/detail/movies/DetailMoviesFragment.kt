@@ -1,4 +1,4 @@
-package com.example.cinema.ui.detail
+package com.example.cinema.ui.detail.movies
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.cinema.databinding.FragmentDetailMoviesBinding
+import com.example.cinema.ui.detail.GenreAdapter
 import com.example.cinema.utils.Resource
 import java.text.DecimalFormat
 import java.text.NumberFormat

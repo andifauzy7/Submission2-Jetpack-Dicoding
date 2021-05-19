@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cinema.R
 import com.example.cinema.databinding.ActivityDetailBinding
+import com.example.cinema.ui.detail.movies.DetailMoviesFragment
+import com.example.cinema.ui.detail.tvshow.DetailTVShowFragment
 
 class DetailActivity : AppCompatActivity() {
 
