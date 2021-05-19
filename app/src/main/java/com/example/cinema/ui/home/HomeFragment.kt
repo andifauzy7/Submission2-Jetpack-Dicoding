@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
             viewModel.getTVShowPopular().observe(viewLifecycleOwner, { show ->
                 fragmentHomeBinding.progressBar.visibility = View.GONE
                 if (show.status == Resource.Status.SUCCESS) {
-                    tvShowAdapterPopular.setShow(show.data)
+                    tvShowAdapterPopular.setShow(show.data!!)
                     tvShowAdapterPopular.notifyDataSetChanged()
                 }
                 else if (show.status == Resource.Status.ERROR) {

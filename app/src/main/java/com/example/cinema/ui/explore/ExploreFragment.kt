@@ -52,7 +52,7 @@ class ExploreFragment : Fragment() {
                         fragmentExploreBinding.rvExploreShow.visibility = View.VISIBLE
                         fragmentExploreBinding.rvExploreMovies.visibility = View.GONE
                         if (show.status == Resource.Status.SUCCESS) {
-                            tvShowAdapterPopular.setShow(show.data)
+                            tvShowAdapterPopular.setShow(show.data!!)
                             tvShowAdapterPopular.notifyDataSetChanged()
                         }
                         else if (show.status == Resource.Status.ERROR) {

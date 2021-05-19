@@ -4,7 +4,7 @@ import androidx.annotation.Nullable
 import com.example.cinema.data.response.ResultMovies
 
 
-class Resource<T> private constructor(val status: Status, @field:Nullable @param:Nullable var data: T,
+class Resource<T> private constructor(val status: Status, @field:Nullable @param:Nullable var data: T?,
                                       @field:Nullable @param:Nullable val message: String?) {
     enum class Status {
         SUCCESS, ERROR, LOADING
@@ -15,8 +15,8 @@ class Resource<T> private constructor(val status: Status, @field:Nullable @param
             return Resource(Status.SUCCESS, data, null)
         }
 
-        fun <T> error(msg: String?, @Nullable data: T): Resource<T> {
-            return Resource(Status.ERROR, data, msg)
+        fun <T> error(msg: String?): Resource<T> {
+            return Resource(Status.ERROR, null, msg)
         }
 
         fun <T> loading(@Nullable data: T): Resource<T> {

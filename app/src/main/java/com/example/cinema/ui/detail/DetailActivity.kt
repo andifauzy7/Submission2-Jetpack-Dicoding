@@ -1,8 +1,9 @@
 package com.example.cinema.ui.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import com.example.cinema.R
 import com.example.cinema.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -14,18 +15,36 @@ class DetailActivity : AppCompatActivity() {
         const val TYPE_CONTENT = "type_content"
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val detailActivity = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(detailActivity.root)
-        supportActionBar?.hide()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val IdContent = intent.getStringExtra(ID_CONTENT)
-        val TypeContent = intent.getStringExtra(TYPE_CONTENT)
-        if(TypeContent == TYPE_MOVIES){
+        val idContent = intent.getStringExtra(ID_CONTENT)
+        val typeContent = intent.getStringExtra(TYPE_CONTENT)
 
+        val mFragmentManager = supportFragmentManager
+        val mDetailMoviesFragment = DetailMoviesFragment(idContent)
+        val mDetailTVShowFragment = DetailTVShowFragment(idContent)
+
+
+        if(typeContent == TYPE_MOVIES){
+            mFragmentManager
+                    .beginTransaction()
+                    .add(R.id.container_detail, mDetailMoviesFragment, DetailMoviesFragment::class.java.simpleName)
+                    .commit()
             Log.d("TYPE", "MOVIES")
         } else {
+           mFragmentManager
+                    .beginTransaction()
+                    .add(R.id.container_detail, mDetailTVShowFragment, DetailTVShowFragment::class.java.simpleName)
+                    .commit()
             Log.d("TYPE", "TV SHOW")
         }
     }

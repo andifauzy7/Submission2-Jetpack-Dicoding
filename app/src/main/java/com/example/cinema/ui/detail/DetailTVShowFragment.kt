@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.cinema.R
 
-class DetailTVShowFragment : Fragment() {
+class DetailTVShowFragment(idContent: String?) : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
