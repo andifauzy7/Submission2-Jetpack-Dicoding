@@ -29,4 +29,10 @@
     <string name="first_air">First Air</string>
     <string name="homepage_show">Homepage Show</string>
     <string name="overview_show">Overview Show</string>
+    <string name="magazine">Magazine+</string>
+    <string name="cinema">Cinema</string>
+    <string name="name">Name ...</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="login">Login</string>
 </resources>

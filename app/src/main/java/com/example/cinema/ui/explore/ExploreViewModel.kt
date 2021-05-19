@@ -1,7 +1,6 @@
 package com.example.cinema.ui.explore
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cinema.data.MovieRepository
 import com.example.cinema.data.response.ResultMovies

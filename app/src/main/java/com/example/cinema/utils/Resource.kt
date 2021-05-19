@@ -1,13 +1,12 @@
 package com.example.cinema.utils
 
 import androidx.annotation.Nullable
-import com.example.cinema.data.response.ResultMovies
 
 
 class Resource<T> private constructor(val status: Status, @field:Nullable @param:Nullable var data: T?,
                                       @field:Nullable @param:Nullable val message: String?) {
     enum class Status {
-        SUCCESS, ERROR, LOADING
+        SUCCESS, ERROR
     }
 
     companion object {
@@ -17,10 +16,6 @@ class Resource<T> private constructor(val status: Status, @field:Nullable @param
 
         fun <T> error(msg: String?): Resource<T> {
             return Resource(Status.ERROR, null, msg)
-        }
-
-        fun <T> loading(@Nullable data: T): Resource<T> {
-            return Resource(Status.LOADING, data, null)
         }
     }
 }
