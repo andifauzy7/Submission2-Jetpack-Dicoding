@@ -1,5 +1,6 @@
 package com.example.cinema.ui.explore
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.cinema.R
 import com.example.cinema.data.response.ResultMovies
 import com.example.cinema.databinding.ItemMoviesExploreBinding
+import com.example.cinema.ui.detail.DetailActivity
 
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>(){
     private var listMovies = ArrayList<ResultMovies>()
@@ -23,6 +25,12 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>(){
                     Glide.with(itemView.context)
                             .load("https://image.tmdb.org/t/p/w500" + movies.posterPath)
                             .into(imgMoviesExplore)
+                }
+                itemView.setOnClickListener {
+                    val intent = Intent(itemView.context, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.ID_CONTENT, movies.id.toString())
+                    intent.putExtra(DetailActivity.TYPE_CONTENT, DetailActivity.TYPE_MOVIES)
+                    itemView.context.startActivity(intent)
                 }
             }
         }

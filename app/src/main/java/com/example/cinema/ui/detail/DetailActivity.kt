@@ -2,6 +2,7 @@ package com.example.cinema.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.cinema.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -18,5 +19,14 @@ class DetailActivity : AppCompatActivity() {
         val detailActivity = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(detailActivity.root)
         supportActionBar?.hide()
+
+        val IdContent = intent.getStringExtra(ID_CONTENT)
+        val TypeContent = intent.getStringExtra(TYPE_CONTENT)
+        if(TypeContent == TYPE_MOVIES){
+
+            Log.d("TYPE", "MOVIES")
+        } else {
+            Log.d("TYPE", "TV SHOW")
+        }
     }
 }

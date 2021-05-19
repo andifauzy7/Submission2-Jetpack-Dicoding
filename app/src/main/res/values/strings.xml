@@ -15,4 +15,15 @@
     <string name="tv_show">TV Show</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title">Title</string>
+    <string name="movies_title">Movies Title</string>
+    <string name="budget">Budget</string>
+    <string name="movies_budget">Movies Budget</string>
+    <string name="genre">Genre</string>
+    <string name="movies_genre">Movies Genre</string>
+    <string name="rating">Rating</string>
+    <string name="released">Released :</string>
+    <string name="homepage_movies">Homepage Movies</string>
+    <string name="overview">Overview</string>
+    <string name="overview_movies">Overview Movies</string>
 </resources>

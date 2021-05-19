@@ -6,4 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".ui.detail.DetailActivity">
 
+    <fragment
+        android:id="@+id/fr_detail_movies"
+        android:name="com.example.cinema.ui.detail.DetailMoviesFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="FragmentTagUsage" />
+
+    <fragment
+        android:id="@+id/fr_detail_show"
+        android:name="com.example.cinema.ui.detail.DetailTVShowFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="FragmentTagUsage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

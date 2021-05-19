@@ -25,7 +25,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>(){
                         .into(imgMoviesPoster)
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
-                    intent.putExtra(DetailActivity.ID_CONTENT, movies.id)
+                    intent.putExtra(DetailActivity.ID_CONTENT, movies.id.toString())
                     intent.putExtra(DetailActivity.TYPE_CONTENT, DetailActivity.TYPE_MOVIES)
                     itemView.context.startActivity(intent)
                 }
