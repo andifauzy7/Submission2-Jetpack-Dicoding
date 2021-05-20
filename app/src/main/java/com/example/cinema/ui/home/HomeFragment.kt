@@ -16,6 +16,7 @@ import com.example.cinema.R
 import com.example.cinema.databinding.FragmentHomeBinding
 import com.example.cinema.utils.Profile
 import com.example.cinema.utils.Resource
+import com.example.cinema.viewmodel.ViewModelFactory
 
 class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
@@ -52,7 +53,8 @@ class HomeFragment : Fragment() {
         }
 
         if (activity != null){
-            viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
             val moviesAdapterPopular = MoviesAdapter()
             fragmentHomeBinding.progressBar.visibility = View.VISIBLE
             viewModel.getMoviesPopular().observe(viewLifecycleOwner, { movies ->

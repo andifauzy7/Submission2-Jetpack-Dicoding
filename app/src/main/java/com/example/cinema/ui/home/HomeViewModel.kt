@@ -7,15 +7,13 @@ import com.example.cinema.data.response.ResultMovies
 import com.example.cinema.data.response.ResultTVShow
 import com.example.cinema.utils.Resource
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
     fun getMoviesPopular(): LiveData<Resource<List<ResultMovies>>> {
-        val movieRepository = MovieRepository()
         return movieRepository.getMoviesPopular()
     }
 
     fun getTVShowPopular(): LiveData<Resource<List<ResultTVShow>>> {
-        val movieRepository = MovieRepository()
         return movieRepository.getTVShowPopular()
     }
 }

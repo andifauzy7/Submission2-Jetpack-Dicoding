@@ -13,6 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.cinema.databinding.FragmentDetailMoviesBinding
 import com.example.cinema.ui.detail.GenreAdapter
 import com.example.cinema.utils.Resource
+import com.example.cinema.viewmodel.ViewModelFactory
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -29,7 +30,8 @@ class DetailMoviesFragment(idContent: String?) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DetailMoviesViewModel::class.java)
+        val factory = ViewModelFactory.getInstance(requireActivity())
+        viewModel = ViewModelProvider(this, factory)[DetailMoviesViewModel::class.java]
         val genreAdapter = GenreAdapter()
         fragmentDetailMoviesBinding.progressBarMovieDetail.visibility = View.VISIBLE
         viewModel.getMovieDetail(idContent).observe(viewLifecycleOwner, { movies ->

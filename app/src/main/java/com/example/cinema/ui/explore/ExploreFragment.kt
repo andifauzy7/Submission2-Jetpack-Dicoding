@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cinema.databinding.FragmentExploreBinding
 import com.example.cinema.utils.Resource
+import com.example.cinema.viewmodel.ViewModelFactory
 
 class ExploreFragment : Fragment() {
     private lateinit var fragmentExploreBinding: FragmentExploreBinding
@@ -28,7 +29,8 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        exploreViewModel = ViewModelProvider(this).get(ExploreViewModel::class.java)
+        val factory = ViewModelFactory.getInstance(requireActivity())
+        exploreViewModel = ViewModelProvider(this, factory)[ExploreViewModel::class.java]
         val moviesAdapterPopular = MoviesAdapter()
         val tvShowAdapterPopular = TVShowAdapter()
 

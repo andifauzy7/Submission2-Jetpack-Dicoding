@@ -11,6 +11,16 @@ import retrofit2.Response
 
 class MovieRepository {
 
+    companion object {
+        @Volatile
+        private var instance: MovieRepository? = null
+
+        fun getInstance(): MovieRepository =
+            instance ?: synchronized(this) {
+                MovieRepository().apply { instance = this }
+            }
+    }
+
     fun getMoviesPopular() : MutableLiveData<Resource<List<ResultMovies>>>{
         val movies = MutableLiveData<Resource<List<ResultMovies>>>()
         val clients = ApiConfig.getApiService().getMoviesPopular()

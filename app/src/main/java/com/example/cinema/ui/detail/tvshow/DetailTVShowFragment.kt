@@ -13,6 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.cinema.databinding.FragmentDetailTvshowBinding
 import com.example.cinema.ui.detail.GenreAdapter
 import com.example.cinema.utils.Resource
+import com.example.cinema.viewmodel.ViewModelFactory
 
 class DetailTVShowFragment(idContent: String?) : Fragment() {
     private var idContent : String = idContent.toString()
@@ -27,7 +28,8 @@ class DetailTVShowFragment(idContent: String?) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DetailTVShowViewModel::class.java)
+        val factory = ViewModelFactory.getInstance(requireActivity())
+        viewModel = ViewModelProvider(this, factory)[DetailTVShowViewModel::class.java]
         val genreAdapter = GenreAdapter()
         fragmentDetailTVShowBinding.progressBarShowDetail.visibility = View.VISIBLE
         viewModel.getTVShowDetail(idContent).observe(viewLifecycleOwner, { tv ->

@@ -6,9 +6,8 @@ import com.example.cinema.data.MovieRepository
 import com.example.cinema.data.response.ResponseMovieDetail
 import com.example.cinema.utils.Resource
 
-class DetailMoviesViewModel : ViewModel() {
+class DetailMoviesViewModel(private val movieRepository: MovieRepository) : ViewModel() {
     fun getMovieDetail(id : String): LiveData<Resource<ResponseMovieDetail>> {
-        val movieRepository = MovieRepository()
         return movieRepository.getMovieDetail(id)
     }
 }
