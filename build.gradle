@@ -26,6 +26,8 @@ task clean(type: Delete) {
 }
 
 ext {
+    idleResourceVersion = '3.2.0'
+    espressoVersion = '3.1.0'
     mockitoVersion = "3.6.0"
     retrofitVersion = "2.9.0"
     loggingInterceptorVersion = "4.9.1"
