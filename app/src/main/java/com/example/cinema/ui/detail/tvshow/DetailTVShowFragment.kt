@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.cinema.databinding.FragmentDetailTvshowBinding
 import com.example.cinema.ui.detail.GenreAdapter
+import com.example.cinema.utils.EspressoIdlingResource
 import com.example.cinema.utils.Resource
 import com.example.cinema.viewmodel.ViewModelFactory
 
@@ -31,8 +32,10 @@ class DetailTVShowFragment(idContent: String?) : Fragment() {
         val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory)[DetailTVShowViewModel::class.java]
         val genreAdapter = GenreAdapter()
+        EspressoIdlingResource.increment()
         fragmentDetailTVShowBinding.progressBarShowDetail.visibility = View.VISIBLE
         viewModel.getTVShowDetail(idContent).observe(viewLifecycleOwner, { tv ->
+            EspressoIdlingResource.decrement()
             if (tv.status == Resource.Status.SUCCESS) {
                 fragmentDetailTVShowBinding.progressBarShowDetail.visibility = View.GONE
                 context?.let {

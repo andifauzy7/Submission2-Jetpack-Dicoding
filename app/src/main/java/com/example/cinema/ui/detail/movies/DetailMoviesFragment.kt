@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.cinema.databinding.FragmentDetailMoviesBinding
 import com.example.cinema.ui.detail.GenreAdapter
+import com.example.cinema.utils.EspressoIdlingResource
 import com.example.cinema.utils.Resource
 import com.example.cinema.viewmodel.ViewModelFactory
 import java.text.DecimalFormat
@@ -33,8 +34,10 @@ class DetailMoviesFragment(idContent: String?) : Fragment() {
         val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory)[DetailMoviesViewModel::class.java]
         val genreAdapter = GenreAdapter()
+        EspressoIdlingResource.increment()
         fragmentDetailMoviesBinding.progressBarMovieDetail.visibility = View.VISIBLE
         viewModel.getMovieDetail(idContent).observe(viewLifecycleOwner, { movies ->
+            EspressoIdlingResource.decrement()
             if (movies.status == Resource.Status.SUCCESS) {
                 fragmentDetailMoviesBinding.progressBarMovieDetail.visibility = View.GONE
                 context?.let {

@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.cinema.R
 import com.example.cinema.databinding.FragmentHomeBinding
+import com.example.cinema.utils.EspressoIdlingResource
 import com.example.cinema.utils.Profile
 import com.example.cinema.utils.Resource
 import com.example.cinema.viewmodel.ViewModelFactory
@@ -56,9 +57,11 @@ class HomeFragment : Fragment() {
             val factory = ViewModelFactory.getInstance(requireActivity())
             viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
             val moviesAdapterPopular = MoviesAdapter()
+            EspressoIdlingResource.increment()
             fragmentHomeBinding.progressBar.visibility = View.VISIBLE
             viewModel.getMoviesPopular().observe(viewLifecycleOwner, { movies ->
                 fragmentHomeBinding.progressBar.visibility = View.GONE
+                EspressoIdlingResource.decrement()
                 if (movies.status == Resource.Status.SUCCESS) {
                     moviesAdapterPopular.setMovies(movies.data)
                     moviesAdapterPopular.notifyDataSetChanged()
@@ -69,8 +72,10 @@ class HomeFragment : Fragment() {
             })
 
             val tvShowAdapterPopular = TVShowAdapter()
+            EspressoIdlingResource.increment()
             fragmentHomeBinding.progressBar.visibility = View.VISIBLE
             viewModel.getTVShowPopular().observe(viewLifecycleOwner, { show ->
+                EspressoIdlingResource.decrement()
                 fragmentHomeBinding.progressBar.visibility = View.GONE
                 if (show.status == Resource.Status.SUCCESS) {
                     tvShowAdapterPopular.setShow(show.data!!)

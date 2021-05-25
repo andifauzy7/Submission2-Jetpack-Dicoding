@@ -3,6 +3,7 @@ package com.example.cinema
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -13,7 +14,9 @@ import com.example.cinema.data.MovieRepository
 import com.example.cinema.data.response.ResultMovies
 import com.example.cinema.data.response.ResultTVShow
 import com.example.cinema.ui.home.HomeViewModel
+import com.example.cinema.utils.EspressoIdlingResource
 import com.example.cinema.utils.Resource
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -28,6 +31,12 @@ class MainActivityTest {
     fun setUp() {
         movieRepository = MovieRepository()
         homeViewModel = HomeViewModel(movieRepository)
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
+    }
+
+    @After
+    fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
     }
 
     @get:Rule
@@ -35,12 +44,7 @@ class MainActivityTest {
 
     @Test
     fun loadMovies() {
-        try {
-            dummyMovies = homeViewModel.getMoviesPopular()
-            Thread.sleep(3000)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
+        dummyMovies = homeViewModel.getMoviesPopular()
         onView(withId(R.id.rv_popular)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_popular)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
             dummyMovies.value?.data?.size!!
@@ -49,12 +53,7 @@ class MainActivityTest {
 
     @Test
     fun loadTVShow() {
-        try {
-            dummyTVShow = homeViewModel.getTVShowPopular()
-            Thread.sleep(3000)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
+        dummyTVShow = homeViewModel.getTVShowPopular()
         onView(withId(R.id.scroll_view_home)).perform(ViewActions.swipeUp())
         onView(withId(R.id.rv_popular_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_popular_tv)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
